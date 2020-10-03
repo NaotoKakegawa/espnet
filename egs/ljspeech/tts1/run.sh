@@ -9,8 +9,8 @@
 
 # general configuration
 backend=pytorch
-stage=-1
-stop_stage=100
+stage=5
+stop_stage=${stage}
 ngpu=1       # number of gpus ("0" uses cpu, otherwise use gpu)
 nj=32        # number of parallel jobs
 dumpdir=dump # directory to dump full features
