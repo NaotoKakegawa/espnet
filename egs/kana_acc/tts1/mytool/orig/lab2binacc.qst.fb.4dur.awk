@@ -121,14 +121,14 @@ BEGIN{
   }
 
   if( (prs[7] == "1") && ((aa[1]!="x") && (aa[1]==cc[5])) ){
-      printf("%s%s%s ", ph[3], "?", symbol_LH);
+      printf("%s%s%s\n", ph[3], "?", symbol_LH);
   }
   else if( (cc[13] == "1") && ((aa[1]!="x") && (aa[1]==cc[5])) ){
-      printf("%s%s%s ", ph[3], "/", symbol_LH);
+      printf("%s%s%s\n", ph[3], "/", symbol_LH);
   }
   else{
-      if (ph[3]=="sil" || ph[3]=="pau")printf("%s ", ph[3]);
-      else printf("%s%s ", ph[3], symbol_LH);
+      if (ph[3]=="sil" || ph[3]=="pau")printf("%s\n", ph[3]);
+      else printf("%s%s\n", ph[3], symbol_LH);
   }
   if ( 0 ){
       acc[1] = (aa[1]=="x")?0:((aa[1]-1)/10);

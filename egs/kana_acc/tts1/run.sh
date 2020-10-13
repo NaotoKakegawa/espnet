@@ -9,7 +9,7 @@
 
 # general configuration
 backend=pytorch
-stage=5
+stage=0
 stop_stage=${stage}
 ngpu=1       # number of gpus ("0" uses cpu, otherwise use gpu)
 nj=32        # number of parallel jobs
@@ -75,14 +75,14 @@ eval_set="${trans_type}_eval"
 
 if [ ${stage} -le -1 ] && [ ${stop_stage} -ge -1 ]; then
     echo "stage -1: Data Download"
-    local/data_download.sh ${db_root}
+    bash local/raw2wav.sh
 fi
 
 if [ ${stage} -le 0 ] && [ ${stop_stage} -ge 0 ]; then
     ### Task dependent. You have to make data the following preparation part by yourself.
     ### But you can utilize Kaldi recipes in most cases
     echo "stage 0: Data preparation"
-    local/data_prep.sh ${db_root}/LJSpeech-1.1 data/${trans_type}_train ${trans_type}
+    local/data_prep.sh ${db_root}/wavs data/${trans_type}_train ${trans_type}
     utils/validate_data_dir.sh --no-feats data/${trans_type}_train
 fi
 
