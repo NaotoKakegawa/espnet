@@ -23,18 +23,20 @@ spk2utt=${data_dir}/spk2utt
 text=${data_dir}/text
 
 # check file existence
-#[ -e ${scp} ] && rm ${scp}
-#[ -e ${utt2spk} ] && rm ${utt2spk}
-#
-## make scp, utt2spk, and spk2utt
-#find_dir=${db}
-#find ${find_dir} -follow -name "*.wav" | sort | while read -r filename;do
-#    id=$(basename ${filename} | sed -e "s/\.[^\.]*$//g")
-#    echo "${id} ${filename}" >> ${scp}
-#    echo "${id} LJ" >> ${utt2spk}
-#done
-#utils/utt2spk_to_spk2utt.pl ${utt2spk} > ${spk2utt}
-#echo "finished making wav.scp, utt2spk, spk2utt."
+[ -e ${scp} ] && rm ${scp}
+[ -e ${utt2spk} ] && rm ${utt2spk}
+
+# make scp, utt2spk, and spk2utt
+find_dir=${db}
+find ${find_dir} -follow -name "*.wav" | sort | while read -r filename;do
+    id=$(basename ${filename} | sed -e "s/\.[^\.]*$//g")
+    echo "${id} ${filename}" >> ${scp}
+    echo "${id} LJ" >> ${utt2spk}
+done
+sort ${utt2spk} | uniq > ${data_dir}/tmp_utt2spk
+mv ${data_dir}/tmp_utt2spk ${utt2spk}
+utils/utt2spk_to_spk2utt.pl ${utt2spk} > ${spk2utt}
+echo "finished making wav.scp, utt2spk, spk2utt."
 
 # make text
 local/lab2char_HL.sh > ${text}

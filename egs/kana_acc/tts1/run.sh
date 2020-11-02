@@ -9,7 +9,7 @@
 
 # general configuration
 backend=pytorch
-stage=0
+stage=5
 stop_stage=${stage}
 ngpu=1       # number of gpus ("0" uses cpu, otherwise use gpu)
 nj=32        # number of parallel jobs
@@ -30,7 +30,7 @@ win_length="" # window length
 
 # char or phn
 # In the case of phn, input transcription is convered to phoneem using https://github.com/Kyubyong/g2p.
-trans_type="char"
+trans_type="phn"
 
 # config files
 train_config=conf/train_pytorch_tacotron2.yaml # you can select from conf or conf/tuning.
@@ -194,6 +194,7 @@ if [ ${stage} -le 3 ] && [ ${stop_stage} -ge 3 ]; then
            --train-json ${tr_json} \
            --valid-json ${dt_json} \
            --config ${train_config}
+    curl -X POST https://hooks.slack.com/services/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 -d'{"text":"学習完了です．"}'
 fi
 
 if [ ${n_average} -gt 0 ]; then

@@ -35,7 +35,7 @@ guided-attn-loss-sigma: 0.4
 reduction-factor: 1
 
 # minibatch related
-batch-size: 32
+batch-size: 8
 batch-sort-key: shuffle # shuffle or input or output
 maxlen-in: 150     # if input length  > maxlen-in, batchsize is reduced (if use "shuffle", not effect)
 maxlen-out: 400    # if output length > maxlen-out, batchsize is reduced (if use "shuffle", not effect)
@@ -47,4 +47,4 @@ weight-decay: 0.0
 dropout-rate: 0.5
 zoneout-rate: 0.1
 epochs: 200
-patience: 0
+patience: 10
