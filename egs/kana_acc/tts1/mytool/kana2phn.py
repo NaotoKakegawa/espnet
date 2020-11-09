@@ -218,12 +218,16 @@ def isKana(token):
     return not token in pros_list
 
 def isMuseiHaretsu(token):
-    musei_haretsu_list = ['P', 'T', 'K', 'PY', 'TY', 'KY', 'TS']
+    musei_haretsu_list = ['P', 'T', 'K', 'PY', 'TY', 'KY', 'TS',
+                          'P^', 'T^', 'K^', 'PY^', 'TY^', 'KY^', 'TS^']
     return token in musei_haretsu_list
 
 def isSilent(token):
     silent_list = ['pau', 'sil']
     return token in silent_list or re.fullmatch(r'Q.*', token) != None
+
+def insertString(tgt, insertStr, idx):
+    return tgt[:idx] + insertStr + tgt[idx:]
 
 # Guess encoding
 def guess_charset(filename):
@@ -250,13 +254,14 @@ def guess_charset(filename):
                 break
     return _max_item(counts)
 
-def main(filename):
+def main(filename, mode):
+    ID_PREFIX = 'FREE-'
+    txt_cnt = 0
     with open(filename, 'r', encoding=guess_charset(filename), errors='backslashreplace') as f:
         for line in f:
 # アクセント核'を一つのトークンとして切り分ける
             token_list = line.replace('\'',' \'').split()
 
-            print(token_list)
             phn_list = ['sil']
             nuclear_passed = False
             HL = 'L'
@@ -284,8 +289,10 @@ def main(filename):
                 if len(phn_list) - back < 0:
                   continue
                 last_phn = phn_list[-back]
-                phn_list[-back] = last_phn + '1'
-                phn_list.append(last_phn + '2')
+#                phn_list[-back] = last_phn + '1'
+#                phn_list.append(last_phn + '2')
+                phn_list[-back] = insertString(last_phn, '1', last_phn.rfind('H|L|/'))
+                phn_list.append(insertString(last_phn, '2', last_phn.rfind('H|L|/')))
 
 # 大小ポーズはpauに変換
               elif token == '@' or token == '.':
@@ -314,8 +321,16 @@ def main(filename):
                 else:
                   HL = 'H'
 
+# 最初か最後でsilとpauが連続する場合，pau削除
+            if phn_list[1] == 'pau':
+              phn_list.pop(1)
+            if phn_list[-1] == 'pau':
+              phn_list.pop(-1)
             phn_list.append('sil')
-            print(phn_list)
+            if mode == 'make_esp_input':
+              print(ID_PREFIX + '{:0=4} '.format(txt_cnt), end='')
+              txt_cnt += 1
+            print(" ".join(phn_list))
     return
 
 
@@ -323,9 +338,8 @@ if __name__ == "__main__":
     sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
     
     parser = argparse.ArgumentParser(description='convert kana + accent to phn + HL')
-    parser.add_argument('mode', help='Mode', choices=['convert'])
+    parser.add_argument('mode', help='Mode', choices=['kana2phn', 'make_esp_input'])
     parser.add_argument('--input', help='Input kana file', default="test_input.txt")
     args = parser.parse_args()
 
-    if args.mode == "convert":
-        main(args.input)
+    main(args.input, args.mode)

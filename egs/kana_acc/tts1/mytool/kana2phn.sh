@@ -12,5 +12,5 @@ if [ $# -ne 1 ]; then
 fi
 cd `dirname $0`
 
-python kana2phn.py convert \
+python kana2phn.py make_esp_input \
     --input=${input}
