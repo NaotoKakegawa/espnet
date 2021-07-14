@@ -34,6 +34,7 @@ egs*/*/*/downloads
 egs*/*/*/dump
 egs*/*/*/enhan
 egs*/*/*/exp
+egs*/*/*/vocoder_output
 egs*/*/*/fbank
 egs*/*/*/mfcc
 egs*/*/*/stft

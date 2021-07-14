@@ -1,0 +1,5 @@
+beam-size: 10
+penalty: 0.1
+# 入力に対する出力の最大長の比．
+maxlenratio: 3.0
+minlenratio: 0.0

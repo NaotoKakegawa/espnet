@@ -8,8 +8,8 @@
 
 # general configuration
 backend=pytorch # chainer or pytorch
-stage=-1          # start from 0 if you need to start from data preparation
-stop_stage=100
+stage=5          # start from 0 if you need to start from data preparation
+stop_stage=5
 ngpu=1          # number of gpus ("0" uses cpu, otherwise use gpu)
 debugmode=1
 dumpdir=dump    # directory to dump full features
@@ -200,6 +200,7 @@ if [ ${stage} -le 5 ] && [ ${stop_stage} -ge 5 ]; then
 
         #### use CPU for decoding
         ngpu=0
+
 
         ${decode_cmd} JOB=1:${nj} ${expdir}/${decode_dir}/log/decode.JOB.log \
             mt_trans.py \

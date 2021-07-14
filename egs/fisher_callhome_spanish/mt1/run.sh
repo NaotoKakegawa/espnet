@@ -9,7 +9,7 @@
 # general configuration
 backend=pytorch # chainer or pytorch
 stage=0         # start from 0 if you need to start from data preparation
-stop_stage=100
+stop_stage=${stage}
 ngpu=1          # number of gpus ("0" uses cpu, otherwise use gpu)
 nj=4            # number of parallel jobs for decoding
 debugmode=1

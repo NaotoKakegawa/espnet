@@ -9,7 +9,7 @@
 # general configuration
 backend=pytorch # chainer or pytorch
 stage=-1        # start from -1 if you need to start from data download
-stop_stage=100
+stop_stage=-1
 ngpu=1          # number of gpus ("0" uses cpu, otherwise use gpu)
 debugmode=1
 dumpdir=dump    # directory to dump full features

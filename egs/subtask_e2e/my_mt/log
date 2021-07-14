@@ -1,0 +1,14 @@
+stage 1: Feature Generation
+dictionary (src): data/lang_1char/train.en_units_lc.rm.en.txt
+dictionary (tgt): data/lang_1char/train.en_units_lc.rm.jp.txt
+stage 2: Dictionary and Json Data Preparation
+make a non-linguistic symbol list for all languages
+<NOISE>
+make a target dictionary
+319 data/lang_1char/train.en_units_lc.rm.jp.txt
+make a source dictionary
+4792 data/lang_1char/train.en_units_lc.rm.en.txt
+make json files
+json updated. original json is kept in dump/train.en/deltafalse/.backup.
+json updated. original json is kept in dump/dev.en/deltafalse/.backup.
+json updated. original json is kept in dump/test.jp/deltafalse/.backup.

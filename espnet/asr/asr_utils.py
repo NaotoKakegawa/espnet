@@ -760,20 +760,26 @@ def torch_resume(snapshot_path, trainer):
     d.load(trainer)
 
     # restore model states
+    logging.info("0_0 < asr_utils.py restores model states")
     if hasattr(trainer.updater.model, "model"):
         # (for TTS model)
         if hasattr(trainer.updater.model.model, "module"):
             trainer.updater.model.model.module.load_state_dict(snapshot_dict["model"])
+            logging.info("0_0 < 0")
         else:
+            logging.info("0_0 < 1")
             trainer.updater.model.model.load_state_dict(snapshot_dict["model"])
     else:
         # (for ASR model)
         if hasattr(trainer.updater.model, "module"):
+            logging.info("0_0 < 2")
             trainer.updater.model.module.load_state_dict(snapshot_dict["model"])
         else:
+            # 0_0 subtask mt is passing here
+            logging.info("0_0 < 3")
             trainer.updater.model.load_state_dict(snapshot_dict["model"])
 
-    # retore optimizer states
+    # restore optimizer states
     trainer.updater.get_optimizer("main").load_state_dict(snapshot_dict["optimizer"])
 
     # delete opened snapshot
